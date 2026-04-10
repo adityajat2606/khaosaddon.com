@@ -13,15 +13,15 @@ const FALLBACK_IMAGE = "/placeholder.svg?height=1400&width=2400";
 
 const heroClasses = {
   'search-first': {
-    section: 'border-b border-slate-200 bg-[linear-gradient(180deg,#edf5ff_0%,#f8fbff_42%,#ffffff_100%)] text-slate-950',
-    overlay: 'bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.18),transparent_26%),radial-gradient(circle_at_top_right,rgba(15,23,42,0.12),transparent_26%)]',
+    section: 'border-b border-[#d3dbef] bg-[linear-gradient(180deg,#edf3ff_0%,#f7f9ff_42%,#ffffff_100%)] text-[#1f2a52]',
+    overlay: 'bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.2),transparent_28%),radial-gradient(circle_at_top_right,rgba(205,31,111,0.17),transparent_28%)]',
     grid: 'lg:grid-cols-[1.08fr_0.92fr]',
-    card: 'border border-white/70 bg-white/80 shadow-[0_28px_90px_rgba(15,23,42,0.12)]',
-    title: 'text-slate-950',
-    body: 'text-slate-600',
-    badge: 'bg-slate-950 text-white',
-    primary: 'bg-slate-950 text-white hover:bg-slate-800',
-    secondary: 'border border-slate-200 bg-white text-slate-900 hover:bg-slate-100',
+    card: 'border border-[#d3dbef] bg-white/85 shadow-[0_28px_90px_rgba(31,42,82,0.14)]',
+    title: 'text-[#1f2a52]',
+    body: 'text-[#4f5b85]',
+    badge: 'bg-[#1f2a52] text-white',
+    primary: 'bg-[#cd1f6f] text-white hover:bg-[#aa175c]',
+    secondary: 'border border-[#d3dbef] bg-white text-[#1f2a52] hover:bg-[#f1f5ff]',
   },
   'spotlight-split': {
     section: 'border-b border-[rgba(123,72,35,0.14)] bg-[linear-gradient(180deg,#1f1613_0%,#2d1d17_50%,#fff7ed_100%)] text-white',

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Plus, Save } from "lucide-react";
@@ -180,6 +180,12 @@ export default function CreateTaskPage() {
   const [values, setValues] = useState<Record<string, string>>({});
   const [uploadingPdf, setUploadingPdf] = useState(false);
 
+  useEffect(() => {
+    if (!user) {
+      router.replace(`/login?next=${encodeURIComponent(`/create/${taskKey}`)}`);
+    }
+  }, [router, taskKey, user]);
+
   if (!taskConfig || !formConfig) {
     return (
       <div className="min-h-screen bg-background">
@@ -202,11 +208,6 @@ export default function CreateTaskPage() {
 
   const handleSubmit = () => {
     if (!user) {
-      toast({
-        title: "Sign in required",
-        description: "Please sign in before creating content.",
-      });
-      router.push("/login");
       return;
     }
 

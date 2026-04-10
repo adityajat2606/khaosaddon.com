@@ -1,34 +1,39 @@
+'use client'
+
+import { useState, type FormEvent } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
 import { REGISTER_PAGE_OVERRIDE_ENABLED, RegisterPageOverride } from '@/overrides/register-page'
+import { useAuth } from '@/lib/auth-context'
 
 function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      side: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      shell: 'bg-[linear-gradient(180deg,#f4f8ff_0%,#ffffff_100%)] text-[#1f2a52]',
+      panel: 'border border-[#d1daf0] bg-white',
+      side: 'border border-[#d7def2] bg-[#f1f5ff]',
+      muted: 'text-[#4f5b85]',
+      action: 'bg-[#cd1f6f] text-white hover:bg-[#aa175c]',
       icon: Building2,
-      title: 'Create a business-ready account',
-      body: 'List services, manage locations, and activate trust signals with a proper directory workflow.',
+      title: 'Create your publisher and listing account',
+      body: 'Set up one profile for article publishing, listing management, and local discovery workflows.',
     }
   }
   if (kind === 'editorial') {
     return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      side: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
+      shell: 'bg-[#f6f3ee] text-[#1f2a52]',
+      panel: 'border border-[#d3daee] bg-[#fffdfa]',
+      side: 'border border-[#d8deee] bg-[#f1f3f9]',
+      muted: 'text-[#56628c]',
+      action: 'bg-[#cd1f6f] text-white hover:bg-[#aa175c]',
       icon: FileText,
       title: 'Start your contributor workspace',
-      body: 'Create a profile for essays, issue drafts, editorial review, and publication scheduling.',
+      body: 'Create a profile for long-form articles, editorial updates, and public listing contributions.',
     }
   }
   if (kind === 'visual') {
@@ -60,10 +65,42 @@ export default function RegisterPage() {
     return <RegisterPageOverride />
   }
 
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [intent, setIntent] = useState('')
+  const [error, setError] = useState('')
+  const { signup, isLoading } = useAuth()
+  const router = useRouter()
+
+  const getNextPath = () => {
+    if (typeof window === 'undefined') return null
+    const next = new URLSearchParams(window.location.search).get('next')
+    return next && next.startsWith('/') ? next : null
+  }
+
   const { recipe } = getFactoryState()
   const productKind = getProductKind(recipe)
   const config = getRegisterConfig(productKind)
   const Icon = config.icon
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setError('')
+
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError('Please complete all required fields.')
+      return
+    }
+
+    try {
+      await signup(name.trim(), email.trim(), password)
+      const target = getNextPath() || '/'
+      router.push(target)
+    } catch {
+      setError('Unable to create your account right now. Please try again.')
+    }
+  }
 
   return (
     <div className={`min-h-screen ${config.shell}`}>
@@ -75,7 +112,7 @@ export default function RegisterPage() {
             <h1 className="mt-5 text-4xl font-semibold tracking-[-0.05em]">{config.title}</h1>
             <p className={`mt-5 text-sm leading-8 ${config.muted}`}>{config.body}</p>
             <div className="mt-8 grid gap-4">
-              {['Different onboarding per product family', 'No repeated one-size-fits-all shell', 'Profile, publishing, and discovery aligned'].map((item) => (
+              {['Profile, listings, and article tools together', 'Consistent branded UX across all sections', 'Local session is saved after sign up'].map((item) => (
                 <div key={item} className="rounded-[1.5rem] border border-current/10 px-4 py-4 text-sm">{item}</div>
               ))}
             </div>
@@ -83,12 +120,13 @@ export default function RegisterPage() {
 
           <div className={`rounded-[2rem] p-8 ${config.panel}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Create account</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Full name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What are you creating or publishing?" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Create account</button>
+            <form className="mt-6 grid gap-4" onSubmit={onSubmit}>
+              <input value={name} onChange={(event) => setName(event.target.value)} className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Full name" autoComplete="name" />
+              <input value={email} onChange={(event) => setEmail(event.target.value)} className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" autoComplete="email" type="email" />
+              <input value={password} onChange={(event) => setPassword(event.target.value)} className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" autoComplete="new-password" />
+              <input value={intent} onChange={(event) => setIntent(event.target.value)} className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What are you creating or publishing?" />
+              {error ? <p className="text-sm text-red-600">{error}</p> : null}
+              <button type="submit" disabled={isLoading} className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action} disabled:opacity-70`}>{isLoading ? 'Creating account...' : 'Create account'}</button>
             </form>
             <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
               <span>Already have an account?</span>
