@@ -5,7 +5,6 @@ import { Search } from "lucide-react";
 import { fetchSiteFeed } from "@/lib/site-connector";
 import { buildPostUrl, getPostTaskKey } from "@/lib/task-data";
 import { getMockPostsForTask } from "@/lib/mock-posts";
-import { SITE_CONFIG } from "@/lib/site-config";
 import { TaskPostCard } from "@/components/shared/task-post-card";
 
 export const revalidate = 3;
@@ -29,12 +28,12 @@ export default async function SearchPage({
   const query = (resolved.q || "").trim();
   const normalized = query.toLowerCase();
   const category = (resolved.category || "").trim().toLowerCase();
-  const task = (resolved.task || "").trim().toLowerCase();
+  const task = "article";
   const useMaster = resolved.master !== "0";
   const feed = await fetchSiteFeed(
     useMaster ? 1000 : 300,
     useMaster
-      ? { fresh: true, category: category || undefined, task: task || undefined }
+      ? { fresh: true, category: category || undefined, task }
       : undefined
   );
   const posts =
@@ -42,12 +41,13 @@ export default async function SearchPage({
       ? feed.posts
       : useMaster
         ? []
-        : SITE_CONFIG.tasks.flatMap((task) => getMockPostsForTask(task.key));
+        : getMockPostsForTask("article");
 
   const filtered = posts.filter((post) => {
     const content = post.content && typeof post.content === "object" ? post.content : {};
     const typeText = compactText((content as any).type);
     if (typeText === "comment") return false;
+    if (typeText && typeText !== "article") return false;
     const description = compactText((content as any).description);
     const body = compactText((content as any).body);
     const excerpt = compactText((content as any).excerpt);
@@ -56,7 +56,6 @@ export default async function SearchPage({
     const tagsText = compactText(tags);
     const derivedCategory = categoryText || tagsText;
     if (category && !derivedCategory.includes(category)) return false;
-    if (task && typeText && typeText !== task) return false;
     if (!normalized.length) return true;
     return (
       matchText(compactText(post.title || ""), normalized) ||
@@ -76,23 +75,23 @@ export default async function SearchPage({
       description={
         query
           ? `Results for "${query}"`
-          : "Browse the latest posts across every task."
+          : "Browse the latest published articles."
       }
       actions={
         <form action="/search" className="flex w-full gap-2 sm:w-auto">
           <input type="hidden" name="master" value="1" />
           {category ? <input type="hidden" name="category" value={category} /> : null}
-          {task ? <input type="hidden" name="task" value={task} /> : null}
+          <input type="hidden" name="task" value="article" />
           <div className="relative w-full sm:w-80">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               name="q"
               defaultValue={query}
-              placeholder="Search across tasks..."
-              className="h-11 pl-9"
+              placeholder="Search articles..."
+              className="h-11 border-[#ccd5ef] bg-white pl-9"
             />
           </div>
-          <Button type="submit" className="h-11">
+          <Button type="submit" className="h-11 bg-[#cd1f6f] text-white hover:bg-[#aa175c]">
             Search
           </Button>
         </form>
@@ -107,7 +106,7 @@ export default async function SearchPage({
           })}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-border p-10 text-center text-muted-foreground">
+        <div className="rounded-2xl border border-dashed border-[#ccd5ef] bg-[#f5f8ff] p-10 text-center text-[#4f5b85]">
           No matching posts yet.
         </div>
       )}
