@@ -2,25 +2,25 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'Independent reading platform',
+    tagline: 'Editorial and publishing desk',
   },
   footer: {
-    tagline: 'Stories, resources, and discoverable posts',
+    tagline: 'Trusted stories, essays, and editorial insights',
   },
   hero: {
-    badge: 'Latest stories and visuals',
-    title: ['A thoughtful home for', 'stories, visuals, and discovery.'],
+    badge: 'Editorial and publishing hub',
+    title: ['Trusted articles,', 'analysis, and practical insights.'],
     description:
-      'Explore fresh articles, image-led posts, and discoverable content across the platform through a calmer and clearer browsing experience.',
+      'Explore expert articles, opinion pieces, and curated editorial resources through a clear reading-first interface.',
     primaryCta: {
-      label: 'Read latest stories',
+      label: 'Browse articles',
       href: '/articles',
     },
     secondaryCta: {
-      label: 'Explore visuals',
-      href: '/image-sharing',
+      label: 'Read latest articles',
+      href: '/articles',
     },
-    searchPlaceholder: 'Search stories, visuals, listings, and more',
+    searchPlaceholder: 'Search stories, topics, and authors',
     focusLabel: 'Focus',
     featureCardBadge: 'latest cover rotation',
     featureCardTitle: 'Latest posts shape the visual identity of the homepage.',
@@ -29,25 +29,25 @@ export const siteContent = {
   },
   home: {
     metadata: {
-      title: 'Stories, visuals, and discoverable content',
+      title: 'Articles, analysis, and discoverable editorial content',
       description:
-        'Explore articles, images, listings, and curated posts through a cleaner reading-first experience.',
-      openGraphTitle: 'Stories, visuals, and discoverable content',
+        'Explore long-form articles and editorial stories through a cleaner reading-first experience.',
+      openGraphTitle: 'Articles, analysis, and discoverable editorial content',
       openGraphDescription:
-        'Discover articles, visual posts, and connected content through a calmer reading-first experience.',
+        'Discover in-depth articles and connected editorial topics through a calmer reading-first experience.',
       keywords: ['story platform', 'article site', 'visual content', 'content discovery'],
     },
     introBadge: 'About the platform',
-    introTitle: 'Built for reading, browsing, and connecting different kinds of content.',
+    introTitle: 'Built for reading, publishing, and discovering long-form content.',
     introParagraphs: [
-      'This site brings together article-style reading, visual browsing, and structured discovery so visitors can move naturally between different content types.',
-      'Instead of separating stories, visuals, and supporting resources into disconnected surfaces, the platform keeps them connected in one place with consistent navigation and easier exploration.',
-      'Whether someone starts with a story, an image-led post, a listing, or a resource page, they can keep discovering related content without friction.',
+      'This site centers article-style reading, publishing, and discovery in one consistent editorial surface.',
+      'Instead of mixing unrelated content types, the platform focuses on stories, insights, and supporting resources with clear navigation.',
+      'Whether someone starts with a feature article or a topic page, they can continue deeper into related writing without friction.',
     ],
     sideBadge: 'At a glance',
     sidePoints: [
       'Reading-first homepage with stronger emphasis on stories and imagery.',
-      'Connected sections for articles, visuals, listings, and supporting resources.',
+      'Connected sections for articles, topics, and supporting resources.',
       'Cleaner browsing rhythm designed to make exploration feel easier.',
       'Lightweight interactions that keep the experience fast and readable.',
     ],
@@ -56,15 +56,15 @@ export const siteContent = {
       href: '/articles',
     },
     secondaryLink: {
-      label: 'See visuals',
-      href: '/image-sharing',
+      label: 'Explore topics',
+      href: '/search?task=article',
     },
   },
   cta: {
     badge: 'Start exploring',
-    title: 'Explore articles, visuals, and resources through one connected experience.',
+    title: 'Explore articles and editorial resources through one connected experience.',
     description:
-      'Move between articles, image-led posts, listings, and resources through one clearer and more connected visual system.',
+      'Move between stories, guides, and resource-style posts through one clearer and more connected editorial system.',
     primaryCta: {
       label: 'Get Started Free',
       href: '/register',
@@ -130,13 +130,13 @@ export const taskIntroCopy: Record<
     title: 'Articles, stories, and long-form reading',
     paragraphs: [
       'This section is built for stories, explainers, guides, and long-form reading across topics and interests.',
-      'Articles connect with listings, images, resources, and other content types so deeper reading can lead naturally into related discovery.',
+      'Articles connect with resources and supporting context so deeper reading can lead naturally into related discovery.',
       'Use this section to browse thoughtful posts, revisit useful writing, and move into supporting content when you want more context.',
     ],
     links: [
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open image sharing', href: '/image-sharing' },
-      { label: 'Browse resources', href: '/pdf' },
+      { label: 'Latest articles', href: '/articles' },
+      { label: 'Editorial topics', href: '/search?task=article' },
+      { label: 'Contact editorial team', href: '/contact' },
     ],
   },
   classified: {
@@ -147,7 +147,7 @@ export const taskIntroCopy: Record<
       'Browse by category to find announcements quickly, then continue into related sections when you need more detail.',
     ],
     links: [
-      { label: 'Business listings', href: '/listings' },
+      { label: 'Featured articles', href: '/articles' },
       { label: 'Read articles', href: '/articles' },
       { label: 'View profiles', href: '/profile' },
     ],
@@ -161,7 +161,7 @@ export const taskIntroCopy: Record<
     ],
     links: [
       { label: 'Read articles', href: '/articles' },
-      { label: 'Explore listings', href: '/listings' },
+      { label: 'Explore articles', href: '/articles' },
       { label: 'Open classifieds', href: '/classifieds' },
     ],
   },
@@ -173,9 +173,9 @@ export const taskIntroCopy: Record<
       'Browse profiles to understand people and brands more clearly, then continue into related content from the same source.',
     ],
     links: [
-      { label: 'Open listings', href: '/listings' },
+      { label: 'Open articles', href: '/articles' },
       { label: 'Read articles', href: '/articles' },
-      { label: 'Browse image sharing', href: '/image-sharing' },
+      { label: 'Browse articles', href: '/articles' },
     ],
   },
   sbm: {
@@ -187,7 +187,7 @@ export const taskIntroCopy: Record<
     ],
     links: [
       { label: 'Browse articles', href: '/articles' },
-      { label: 'Explore listings', href: '/listings' },
+      { label: 'Explore articles', href: '/articles' },
       { label: 'Open PDFs', href: '/pdf' },
     ],
   },
@@ -200,7 +200,7 @@ export const taskIntroCopy: Record<
     ],
     links: [
       { label: 'Read articles', href: '/articles' },
-      { label: 'See listings', href: '/listings' },
+      { label: 'See articles', href: '/articles' },
       { label: 'Explore profiles', href: '/profile' },
     ],
   },
@@ -212,7 +212,7 @@ export const taskIntroCopy: Record<
       'Use these posts as lightweight entry points into the broader site experience.',
     ],
     links: [
-      { label: 'Open listings', href: '/listings' },
+      { label: 'Open articles', href: '/articles' },
       { label: 'Read articles', href: '/articles' },
       { label: 'View PDFs', href: '/pdf' },
     ],
@@ -226,7 +226,7 @@ export const taskIntroCopy: Record<
     ],
     links: [
       { label: 'Explore articles', href: '/articles' },
-      { label: 'View listings', href: '/listings' },
+      { label: 'View articles', href: '/articles' },
       { label: 'See classifieds', href: '/classifieds' },
     ],
   },
@@ -238,9 +238,10 @@ export const taskIntroCopy: Record<
       'Connect organization pages with related content to build a clearer and more unified site presence.',
     ],
     links: [
-      { label: 'Business listings', href: '/listings' },
+      { label: 'Featured articles', href: '/articles' },
       { label: 'Read articles', href: '/articles' },
       { label: 'PDF library', href: '/pdf' },
     ],
   },
 }
+

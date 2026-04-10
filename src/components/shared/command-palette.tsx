@@ -4,25 +4,22 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command'
 import { useToast } from '@/components/ui/use-toast'
-import { FileText, Plus, Tag, Bookmark, Settings, Search } from 'lucide-react'
+import { FileText, Plus, Settings, Search } from 'lucide-react'
+import { useAuth } from '@/lib/auth-context'
 
 const quickLinks = [
-  { label: 'Go to Social Bookmarks', href: '/sbm', icon: Bookmark },
   { label: 'Go to Articles', href: '/articles', icon: FileText },
-  { label: 'Go to Listings', href: '/listings', icon: Tag },
   { label: 'Go to Settings', href: '/settings', icon: Settings },
 ]
 
 const createActions = [
   { label: 'Create Article', href: '/create/article', icon: Plus },
-  { label: 'Create Listing', href: '/create/listing', icon: Plus },
-  { label: 'Create Classified', href: '/create/classified', icon: Plus },
-  { label: 'Submit Bookmark', href: '/create/sbm', icon: Plus },
 ]
 
 export function CommandPalette() {
   const router = useRouter()
   const { toast } = useToast()
+  const { isAuthenticated } = useAuth()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -63,7 +60,7 @@ export function CommandPalette() {
             <CommandItem
               key={item.href}
               onSelect={() => {
-                router.push(item.href)
+                router.push(isAuthenticated ? item.href : `/login?next=${encodeURIComponent(item.href)}`)
                 setOpen(false)
               }}
             >
@@ -76,7 +73,7 @@ export function CommandPalette() {
         <CommandGroup heading="Quick">
           <CommandItem
             onSelect={() => {
-              toast({ title: 'Search opened', description: 'Use the hero search or /search page.' })
+              toast({ title: 'Search opened', description: 'Use the /search page to find articles.' })
               router.push('/search')
               setOpen(false)
             }}

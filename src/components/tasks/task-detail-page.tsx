@@ -229,7 +229,7 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
 
   if (productKind === "directory" && (task === "listing" || task === "classified" || task === "profile")) {
     return (
-      <div className="min-h-screen bg-[#f8fbff]">
+      <div className="min-h-screen bg-[linear-gradient(180deg,#f5f8ff_0%,#ffffff_100%)]">
         <NavbarShell />
         <DirectoryTaskDetailPage
           task={task}
